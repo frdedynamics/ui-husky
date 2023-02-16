@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Husky interface</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+  crossorigin=""/>
+
+  <script 
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""> 
+
+</script>
+
+<script>
+  function buttonPress() {
+    var polygon = L.polygon([
+    [61.45886, 5.88614],
+    [61.45897, 5.88665],
+    [61.45884, 5.88676],
+    [61.45872, 5.88627]
+]).addTo(map);
+  }
+  var popup = L.popup();
+  
+  function onMapClick(e) {
+      popup
+          .setLatLng(e.latlng)
+          .setContent("Dette er: " + e.latlng.toString())
+          .openOn(map);
+  }
+</script>
+
+  <style>
+    button {
+      font-size: 25px;
+      background-color: rgb(24, 112, 112);
+      color: white;
+      padding: 10px;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+    }
+    .menu {
+      background-color: aqua;
+    }
+    #map { height: 800px; }
+  </style>
+</head>
+<body>
+
+  <div class="page-grid">
+
+    <div class="menu">
+      menu
+    </div>
+    
+    <div class="map-interface">
+      map interface
+      <div id="map"></div>
+      <div class="button">
+        buttons
+        <button onclick="buttonPress()">Marker</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var map = L.map('map').setView([61.45874, 5.88740], 18);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+  </script>
+
+  <script>
+  map.on('click', onMapClick);
+  </script>
+</body>
+</html>
