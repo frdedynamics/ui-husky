@@ -11,55 +11,46 @@
     src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
     crossorigin=""> 
+  </script>
 
-</script>
-
-<script>
-  function buttonPress() {
-    var polygon = L.polygon([
-    [61.45886, 5.88614],
-    [61.45897, 5.88665],
-    [61.45884, 5.88676],
-    [61.45872, 5.88627]
-]).addTo(map);
-  }
-  var popup = L.popup();
-  
-  function onMapClick(e) {
-      popup
-          .setLatLng(e.latlng)
-          .setContent("Dette er: " + e.latlng.toString())
-          .openOn(map);
-  }
-</script>
+<script src="script/map-script.js"></script>
 
   <style>
+    html, body, #st-full-pg {
+      height: 100%;
+      margin: 0;
+    }
     button {
       font-size: 25px;
       background-color: rgb(24, 112, 112);
       color: white;
       padding: 10px;
+      height: 60px;
     }
-    .page-grid {
+    .grid-continer {
       display: grid;
-      grid-template-columns: 150px 1fr;
+      margin: 0;
+      background-color: bisque;
+      grid-template-columns: 200px 1fr;
+      height: 100%;
     }
     .menu {
       background-color: aqua;
     }
-    #map { height: 800px; }
+    #map { 
+      height: calc(100% - 70px);
+      }
   </style>
 </head>
 <body>
 
-  <div class="page-grid">
+  <div class="grid-continer">
 
     <div class="menu">
       menu
     </div>
     
     <div class="map-interface">
-      map interface
       <div id="map"></div>
       <div class="button">
         buttons
@@ -69,16 +60,14 @@
   </div>
 
   <script>
-    var map = L.map('map').setView([61.45874, 5.88740], 18);
+    var map = L.map('map').setView([61.45874, 5.88740], 19);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-  </script>
 
-  <script>
-  map.on('click', onMapClick);
+map.on('click', onMapClick);
   </script>
 </body>
 </html>
