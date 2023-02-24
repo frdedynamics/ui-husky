@@ -1,0 +1,24 @@
+html, body, #st-full-pg {
+    height: 100%;
+    margin: 0;
+  }
+  button {
+    font-size: 25px;
+    background-color: rgb(24, 112, 112);
+    color: white;
+    padding: 10px;
+    height: 60px;
+  }
+  .grid-continer {
+    display: grid;
+    margin: 0;
+    background-color: bisque;
+    grid-template-columns: 200px 1fr;
+    height: 100%;
+  }
+  .menu {
+    background-color: aqua;
+  }
+  #map { 
+    height: calc(100% - 70px);
+    }

@@ -1,4 +1,5 @@
 var popup = L.popup();
+var points = []
 
 // Runs on buttonpress
 function buttonPress() {
@@ -12,9 +13,10 @@ function buttonPress() {
 
 // Runs when map is clicked
 function onMapClick(e) {
+    points.push(e.latlng)
     popup
     .setLatLng(e.latlng)
-    .setContent("Dette er: " + e.latlng.toString())
+    .setContent(e.latlng.toString())
     .openOn(map);
 } 
 
@@ -25,3 +27,8 @@ function onMapClick(e) {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+function button_show() {
+    points.forEach(element => {
+        console.log(element)
+    });
+}
