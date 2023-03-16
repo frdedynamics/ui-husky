@@ -15,7 +15,7 @@ class ConnectionStatus extends Component {
         ros.on("close", () => {
           console.log("Connection is closed!");
           this.setState({ connected: false, ros: null });
-          // Retry every second
+          // Retry every REACT_APP_REFRESH_TIMER ms
           setTimeout(() => {
             try {
               ros.connect("ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + "");
