@@ -64,12 +64,11 @@ class MapComp extends Component {
       <MapContainer
         center={[61.45874, 5.88743]}
         zoom={18}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         maxZoom={25}
         whenCreated={(map) => {
           this.map = map;
         }}
-        onClick={this.handleMapClick}
       >
         <TileLayer
           maxNativeZoom={19}
@@ -82,19 +81,6 @@ class MapComp extends Component {
             Husky <br /> Mobile robot
           </Popup>
         </Marker>
-        {this.state.markerPos && (
-          <Marker position={this.state.markerPos}>
-            <Popup>You clicked here!</Popup>
-          </Marker>
-        )}
-        <Marker
-  position={[50.5, 30.5]}
-  eventHandlers={{
-    click: () => {
-      console.log('marker clicked')
-    },
-  }}
-/>
       </MapContainer>
     );
   }
