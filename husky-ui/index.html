@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Husky interface</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+  integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+  crossorigin=""/>
+
+  <link rel="stylesheet" href="style/frontpage.css">
+
+  <script 
+    src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""> 
+  </script>
+
+<script src="script/map-script.js"></script>
+</head>
+<body>
+
+  <div class="grid-continer">
+
+    <div class="menu">
+      menu
+      <div class="button">
+        <div>
+        <button onclick="buttonPress()">Marker</button>
+      </div>
+      <div>
+        <button onclick="button_show()">Show</button>
+      </div>
+      </div>
+    </div>
+    
+    <div class="map-interface">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <script>
+    var map = L.map('map').setView([61.45874, 5.88740], 19);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+map.on('click', onMapClick);
+  </script>
+</body>
+</html>

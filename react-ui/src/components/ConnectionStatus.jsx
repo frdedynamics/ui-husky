@@ -8,19 +8,19 @@ class ConnectionStatus extends Component {
     componentDidMount() {
         const ros = new window.ROSLIB.Ros();
         ros.on("connection", () => {
-          console.log("Connection established!")
+          console.log("Connection established! ConnectionStatus")
           this.setState({ connected: true, ros: ros })
         });
     
         ros.on("close", () => {
-          console.log("Connection is closed!");
+          console.log("Connection is closed! ConnectionStatus");
           this.setState({ connected: false, ros: null });
           // Retry every REACT_APP_REFRESH_TIMER ms
           setTimeout(() => {
             try {
               ros.connect("ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + "");
             } catch (error) {
-              console.log("connection problem ");
+              console.log("connection problem: ConnectionStatus");
             }
           }, Number(process.env.REACT_APP_REFRESH_TIMER))
         });
@@ -28,7 +28,7 @@ class ConnectionStatus extends Component {
         try {
           ros.connect("ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + "");
         } catch (error) {
-          console.log("connection problem ");
+          console.log("connection problem: ConnectionStatus");
         }
       }
     
