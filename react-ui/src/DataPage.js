@@ -7,6 +7,7 @@ const cicon = new Icon({
       "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // kan ref fil her også
     iconSize: [38, 38],
   });
+  
 function DataPage() {
     const [position, setPosition] = useState(null);
     map = 
