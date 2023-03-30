@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import ConnectionStatus from './ConnectionStatus';
 
-
+/*
+Navigation bar that display connaction status and input menue
+*/
 function Header() {
     return (
       <Navbar bg="light" expand="lg">

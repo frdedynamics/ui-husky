@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import Alert from "react-bootstrap/Alert";
 
 
+/* When the component is mounted, connect to the ROS websocket and set the state of the component to
+connected if the connection is successful. 
+*/
 class ConnectionStatus extends Component {
     state = { connected: false, ros: null } 
 
