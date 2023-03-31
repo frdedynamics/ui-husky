@@ -31,4 +31,5 @@ function button_show() {
     points.forEach(element => {
         console.log(element)
     });
+    var polygon = L.polygon(points).addTo(map)
 }
