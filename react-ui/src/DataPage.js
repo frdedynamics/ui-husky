@@ -1,48 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { Icon, popup, points, map } from "leaflet";
+import React, {
+  Component,
+  useState, 
+  useCallback, 
+  useEffect 
+} from 'react';
 
-const cicon = new Icon({
-    iconUrl:
-      "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // kan ref fil her også
-    iconSize: [38, 38],
-  });
-  
-function DataPage() {
-    const [position, setPosition] = useState(null);
-    map = 
-    //var position = [61.45874, 5.88743]
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  MapConsumer,
+  useMapEvent,
+} from 'react-leaflet';
 
-    function onMapClick(e) {
-        points.push(e.latlng)
-        popup
-        .setLatLng(e.latlng)
-        console.log(e.latlng.toString())
+import { Icon } from 'leaflet';
 
-        return position === null ? null : (
-            <Marker position={position}>
-              <Popup>You are here</Popup>
-            </Marker>
-          )
-    } 
+var defaultPosition = [48.864719, 2.349]; // Paris position
+var [position, setPosition] = ['', ''];
 
-    useEffect(() => {
-        if (position) {
-            console.log(position);
-        }
-    }, [position]);
-  
-    function handleClick(e) {
-      console.log(e.latlng)
-      setPosition(e.latlng);
-    }
-  
-    return (
-      <MapContainer center={[61.45874, 5.88743]} zoom={18} scrollWheelZoom={false} onClick={handleClick}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <onMapClick />
-      </MapContainer>
-    );
+let cicon = new Icon({
+  iconUrl:
+    "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // kan ref fil her også
+  iconSize: [38, 38],
+});
+
+function DisplayPosition({ map }) {
+  [position, setPosition] = useState(map.getCenter());
+  defaultPosition = map
+    ? [
+        Number(map.getCenter().lat.toFixed(4)),
+        Number(map.getCenter().lng.toFixed(4)),
+      ]
+    : [48.864719, 2.349];
+
+  const onClick = useCallback(() => {
+    map.setView([48.864716, 2.349], 13);
+  }, [map]);
+  //console.log('markerPos', markerPos);
+  const onMove = useCallback(() => {
+    setPosition(map.getCenter());
+  }, [map]);
+
+  useEffect(() => {
+    map.on('move', onMove);
+    return () => {
+      map.off('move', onMove);
+    };
+  }, [map, onMove]);
+
+  return (
+    <p>
+      latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
+      <button onClick={onClick}>reset</button>
+    </p>
+  );
 }
 
-export default DataPage;
+function DataPage() {
+  let [map, setMap] = useState(null);
+
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+  console.log('defaultPosition', defaultPosition);
+  return (
+    <div>
+      <div className="map__container" onMouseUp={forceUpdate}>
+        <MapContainer center={defaultPosition} zoom={13} whenCreated={setMap}>
+          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <Marker position={defaultPosition} icon={cicon}></Marker>;
+        </MapContainer>
+      </div>
+      {map ? <DisplayPosition map={map} /> : null}
+    </div>
+  );
+}
+
+export default DataPage
