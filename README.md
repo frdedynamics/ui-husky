@@ -4,7 +4,7 @@
 
 
 
-### Connection with ROS (First controllpanel)
+### Connection with ROS (First control panel)
 ![image](https://user-images.githubusercontent.com/83178024/222717132-3b15befb-dd86-4ee4-94a5-61714ad0f962.png)
 Able to read position data and post to topic.
 
