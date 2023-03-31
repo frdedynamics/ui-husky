@@ -1,7 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
-HOST = "158.37.189.72"
+HOST = "158.37.188.1"
 PORT = 8080
 
 print(f"Creating server for host = {HOST} and port = {PORT}")
@@ -12,7 +12,7 @@ class HUSKY_server(BaseHTTPRequestHandler):
     def do_GET(self):
         print("Running do_GET")
         if self.path == '/':
-            self.path = '/index.html'
+            self.path = '/husky-ui/index.html'
         try:
             open_file = open(self.path[1:]).read()
             self.send_response(200)
