@@ -15,8 +15,8 @@ import {
 
 import { Icon } from 'leaflet';
 
-var defaultPosition = [48.864719, 2.349]; // Paris position
-var [position, setPosition] = ['', ''];
+let defaultPosition = [48.864719, 2.349]; // Paris position
+let [position, setPosition] = ['', ''];
 
 let cicon = new Icon({
   iconUrl:
