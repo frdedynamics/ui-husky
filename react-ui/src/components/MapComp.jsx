@@ -15,6 +15,7 @@ class MapComp extends Component {
     ros.on("connection", () => {
       console.log("Connection established! MapComp");
       this.setState({ connected: true, ros: ros });
+      this.getRobotState()
     });
 
     ros.on("close", () => {
@@ -35,6 +36,7 @@ class MapComp extends Component {
         }
       }, Number(process.env.REACT_APP_REFRESH_TIMER));
     });
+    this.getRobotState()
 
     try {
       ros.connect(
@@ -48,12 +50,26 @@ class MapComp extends Component {
       console.log("connection problem MapComp");
     }
   }
+  getRobotState() {
+    console.log("getRobotState run")
+    if (!this.state.ros) return;
+    // Pose subscriber
+    var pose_subscriber = new window.ROSLIB.Topic({
+        ros: this.state.ros,
+        name: "/emlid/fix",
+        messageType: "sensor_msgs/NavSatFix",
+    })
+    // Pose callback
+    pose_subscriber.subscribe((message) => {
+        console.log("pose_subscriber run")
+        //this.setState({x: message.latitude.toFixed(7)})
+        //this.setState({y: message.longitude.toFixed(7)})
+        //log.message({[message.latitude, message.longitude]})
+        this.setState({huskypos: [message.latitude, message.longitude]})
+        //this.setState({orientation: this.getOrientation(message.pose.pose.orientation).toFixed(0)})
 
-  handleMapClick = (e) => {
-    console.log("Position:", e.latlng);
-    this.setState({ markerPos: e.latlng });
-  };
-
+    })
+}
   render() {
     const cicon = new Icon({
       iconUrl:

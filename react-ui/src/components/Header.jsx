@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import ConnectionStatus from './ConnectionStatus';
+import RobotState from './RobotState'
 
 /*
 Navigation bar that display connaction status and input menue
@@ -17,7 +18,9 @@ function Header() {
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/data">Data</Nav.Link>
             </Nav>
+          <RobotState />
           </Navbar.Collapse>
+
         </Container>
       </Navbar>
     );
