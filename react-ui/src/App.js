@@ -3,7 +3,7 @@ import "./styles.css"
 import "leaflet/dist/leaflet.css"
 import MapComp from "./components/MapComp";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DataPage from "./DataPage";
+import DataPage from "./components/DataPage";
 
 function App() {
   return (
