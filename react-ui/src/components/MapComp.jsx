@@ -1,10 +1,7 @@
 import { Component } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, Tooltip, Polygon } from "react-leaflet";
 import { Icon } from "leaflet";
 import SendData from "./SendData";
-import { useActionData } from "react-router-dom";
-import { Prev } from "react-bootstrap/esm/PageItem";
-import { Color } from "three";
 
 class MapComp extends Component {
   state = {
@@ -75,20 +72,27 @@ class MapComp extends Component {
 
     })
   }
+/**
+ * This is a lifecycle method in a React component that checks if the markerPath state has been updated
+ * and logs a message if it has.
+ */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.markerPath !== this.state.markerPath) {
       console.log("Path update")
     }
   }
+  sendData = () => {
+    console.log("Send Data Trykket")
+  }
   render() {
     const roboticon = new Icon({
       iconUrl:
-        "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // kan ref fil her også
+        "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // Can input link to file or url
       iconSize: [38, 38],
     });
     const inicon = new Icon({
       iconUrl:
-        "https://cdn-icons-png.flaticon.com/512/484/484167.png", // kan ref fil her også
+        "https://cdn-icons-png.flaticon.com/512/484/484167.png", // Can input link to file or url
       iconSize: [30, 30],
     });
 
@@ -102,16 +106,22 @@ class MapComp extends Component {
       })
     }
 
+    const RemovePath = () => {
+      this.setState({
+        markerPos: null,
+        markerPath: [],
+      })
+    }
 
     return (
       <MapContainer
-        center={[61.45874, 5.88743]}
-        zoom={18}
-        scrollWheelZoom={true}
-        maxZoom={25}
-        whenCreated={(map) => {
-          this.map = map;
-        }}
+      center={[61.45874, 5.88743]}
+      zoom={18}
+      scrollWheelZoom={true}
+      maxZoom={25}
+      whenCreated={(map) => {
+        this.map = map;
+      }}
       >
         <ClickMap />
         <TileLayer
@@ -129,8 +139,9 @@ class MapComp extends Component {
         {/* Marker from user */}
         {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon}>
           <Popup position={this.state.markerPos}>
-            Input
+            <span onClick={RemovePath}>{RemovePath ? 'click' : 'Click to remove'}</span>
           </Popup>
+          <Tooltip>Click on marker to remove path</Tooltip>
           </Marker>}
           {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
       </MapContainer>

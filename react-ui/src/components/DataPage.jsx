@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
-import { Icon } from "leaflet";
+import L, { Icon } from "leaflet";
 
 class DataPage extends Component {
 

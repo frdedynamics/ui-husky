@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import ConnectionStatus from './ConnectionStatus';
 import RobotState from './RobotState'
+import SendData from './SendData';
 
 /*
 Navigation bar that display connaction status and input menue
@@ -17,6 +18,7 @@ function Header() {
             <Nav className="me-auto">
               <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/data">Data</Nav.Link>
+              <SendData />
             </Nav>
           <RobotState />
           </Navbar.Collapse>
