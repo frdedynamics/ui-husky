@@ -1,5 +1,9 @@
 # UI-Husky
 
+### Path planing added
+
+![bilde](https://user-images.githubusercontent.com/83178024/231753440-95f5d42d-060e-4a50-a719-b5d51449551e.png)
+
 ### Marker following robot
 Updating from /emlid/fix
 
