@@ -16,13 +16,13 @@ class RobotState extends Component {
     componentDidMount() {
         const ros = new window.ROSLIB.Ros();
         ros.on("connection", () => {
-            console.log("Connection established!")
+            console.log("Connection established! Robotstate")
             this.setState({ connected: true, ros: ros })
             this.getRobotState()
         });
 
         ros.on("close", () => {
-            console.log("Connection is closed!");
+            console.log("Connection is closed! Robotstate");
             this.setState({ connected: false, ros: null });
             // Retry every second
             setTimeout(() => {
@@ -43,7 +43,7 @@ class RobotState extends Component {
         try {
             ros.connect("ws://" + Config.ROSBRIDE_SERVER_IP + ":" + Config.ROSBRIDE_SERVER_PORT + "");
         } catch (error) {
-            console.log("connection problem ");
+            console.log("connection problem Robotstate");
         }
     }
 

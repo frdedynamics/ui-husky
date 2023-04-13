@@ -10,6 +10,7 @@ class DataPage extends Component {
     this.state = {
       huskypos: [61.45874, 5.88743],
       markerPos: null,
+      markerPath: [],
     };
   }
 
@@ -34,6 +35,8 @@ class DataPage extends Component {
           console.log("Position: ", e.latlng);
           // Update state with clicked position
           this.setState({ markerPos: e.latlng });
+          this.setState({markerPath: [...this.state.markerPath, e.latlng]})
+          console.log("array ", this.state.markerPath)
         },
       });
       return null;

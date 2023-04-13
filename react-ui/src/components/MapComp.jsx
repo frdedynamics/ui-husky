@@ -1,6 +1,10 @@
 import { Component } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline } from "react-leaflet";
 import { Icon } from "leaflet";
+import SendData from "./SendData";
+import { useActionData } from "react-router-dom";
+import { Prev } from "react-bootstrap/esm/PageItem";
+import { Color } from "three";
 
 class MapComp extends Component {
   state = {
@@ -8,6 +12,7 @@ class MapComp extends Component {
     ros: null,
     huskypos: [61.45874, 5.88743],
     markerPos: null,
+    markerPath: [],
   };
 
   componentDidMount() {
@@ -69,13 +74,35 @@ class MapComp extends Component {
         //this.setState({orientation: this.getOrientation(message.pose.pose.orientation).toFixed(0)})
 
     })
-}
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.markerPath !== this.state.markerPath) {
+      console.log("Path update")
+    }
+  }
   render() {
-    const cicon = new Icon({
+    const roboticon = new Icon({
       iconUrl:
         "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // kan ref fil her også
       iconSize: [38, 38],
     });
+    const inicon = new Icon({
+      iconUrl:
+        "https://cdn-icons-png.flaticon.com/512/484/484167.png", // kan ref fil her også
+      iconSize: [30, 30],
+    });
+
+    const ClickMap = () => {
+      const map = useMapEvents({
+        click: (e) => {
+          console.log("Map clicked pos: ", e.latlng)
+          this.setState({markerPos: e.latlng})
+          this.setState({markerPath: [...this.state.markerPath, e.latlng]})
+        }
+      })
+    }
+
+
     return (
       <MapContainer
         center={[61.45874, 5.88743]}
@@ -86,17 +113,26 @@ class MapComp extends Component {
           this.map = map;
         }}
       >
+        <ClickMap />
         <TileLayer
           maxNativeZoom={19}
           maxZoom={25}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={this.state.huskypos} icon={cicon}>
+        {/* Robot Marker */}
+        <Marker position={this.state.huskypos} icon={roboticon}>
           <Popup>
             Husky <br /> Mobile robot
           </Popup>
         </Marker>
+        {/* Marker from user */}
+        {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon}>
+          <Popup position={this.state.markerPos}>
+            Input
+          </Popup>
+          </Marker>}
+          {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
       </MapContainer>
     );
   }
