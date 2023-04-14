@@ -1,15 +1,15 @@
-import { Component } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, Tooltip, Polygon } from "react-leaflet";
+import React, { Component } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, Tooltip, LayersControl } from "react-leaflet";
 import { Icon } from "leaflet";
-import SendData from "./SendData";
 
 class MapComp extends Component {
   state = {
     connected: false,
     ros: null,
-    huskypos: [61.45874, 5.88743],
+    huskypos: null, //[61.45874, 5.88743]
     markerPos: null,
     markerPath: [],
+    huskyPath: [],
   };
 
   componentDidMount() {
@@ -77,8 +77,12 @@ class MapComp extends Component {
  * and logs a message if it has.
  */
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.markerPath !== this.state.markerPath) {
-      console.log("Path update")
+    if (prevState.huskypos !== this.state.huskypos) {
+      this.setState({huskyPath: [...this.state.huskyPath, this.state.huskypos]})
+      console.log("Husky path update")
+    }
+    if (prevState.huskypos == null && this.state.huskypos != null) {
+      this.map.flyTo(this.state.huskypos)
     }
   }
   sendData = () => {
@@ -87,12 +91,12 @@ class MapComp extends Component {
   render() {
     const roboticon = new Icon({
       iconUrl:
-        "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // Can input link to file or url
+        "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // Can input path to file or url
       iconSize: [38, 38],
     });
     const inicon = new Icon({
       iconUrl:
-        "https://cdn-icons-png.flaticon.com/512/484/484167.png", // Can input link to file or url
+        "https://cdn-icons-png.flaticon.com/512/484/484167.png", // Can input path to file or url
       iconSize: [30, 30],
     });
 
@@ -113,6 +117,7 @@ class MapComp extends Component {
       })
     }
 
+
     return (
       <MapContainer
       center={[61.45874, 5.88743]}
@@ -129,13 +134,15 @@ class MapComp extends Component {
           maxZoom={25}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+          />
         {/* Robot Marker */}
-        <Marker position={this.state.huskypos} icon={roboticon}>
+        {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}>
           <Popup>
             Husky <br /> Mobile robot
           </Popup>
-        </Marker>
+        </Marker>}
+        <LayersControl position="topright">
+          <LayersControl.Overlay checked name="Marker from user">
         {/* Marker from user */}
         {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon}>
           <Popup position={this.state.markerPos}>
@@ -143,7 +150,14 @@ class MapComp extends Component {
           </Popup>
           <Tooltip>Click on marker to remove path</Tooltip>
           </Marker>}
+          </LayersControl.Overlay>
+          <LayersControl.Overlay checked name="Path">
           {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
+          </LayersControl.Overlay>
+          <LayersControl.Overlay checked name="Husky Path">
+          {this.state.huskyPath.length > 2 && <Polyline positions={this.state.huskyPath} color="blue" />}
+          </LayersControl.Overlay>
+          </LayersControl>
       </MapContainer>
     );
   }
