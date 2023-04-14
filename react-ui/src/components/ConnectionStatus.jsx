@@ -35,6 +35,13 @@ class ConnectionStatus extends Component {
         }
       }
     
+/**
+ * This is a React component that renders an Alert component with a message indicating whether the
+ * component is connected or disconnected.
+ * @returns A React component that renders an Alert with a variant of either "success" or "danger"
+ * depending on the value of the "connected" state. The text of the Alert will display either
+ * "Connected" or "Disconnected" depending on the value of the "connected" state.
+ */
       render() {
         return (
           <div>

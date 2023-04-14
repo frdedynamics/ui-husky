@@ -28,10 +28,10 @@ class MapComp extends Component {
         try {
           ros.connect(
             "ws://" +
-              process.env.REACT_APP_IP_ROS +
-              ":" +
-              process.env.REACT_APP_PORT_ROS +
-              ""
+            process.env.REACT_APP_IP_ROS +
+            ":" +
+            process.env.REACT_APP_PORT_ROS +
+            ""
           );
         } catch (error) {
           console.log("connection problem MapComp");
@@ -43,10 +43,10 @@ class MapComp extends Component {
     try {
       ros.connect(
         "ws://" +
-          process.env.REACT_APP_IP_ROS +
-          ":" +
-          process.env.REACT_APP_PORT_ROS +
-          ""
+        process.env.REACT_APP_IP_ROS +
+        ":" +
+        process.env.REACT_APP_PORT_ROS +
+        ""
       );
     } catch (error) {
       console.log("connection problem MapComp");
@@ -57,33 +57,33 @@ class MapComp extends Component {
     if (!this.state.ros) return;
     // Pose subscriber
     var pose_subscriber = new window.ROSLIB.Topic({
-        ros: this.state.ros,
-        name: "/emlid/fix",
-        messageType: "sensor_msgs/NavSatFix",
+      ros: this.state.ros,
+      name: "/emlid/fix",
+      messageType: "sensor_msgs/NavSatFix",
     })
     // Pose callback
     pose_subscriber.subscribe((message) => {
-        console.log("pose_subscriber run")
-        //this.setState({x: message.latitude.toFixed(7)})
-        //this.setState({y: message.longitude.toFixed(7)})
-        //log.message({[message.latitude, message.longitude]})
-        this.setState({huskypos: [message.latitude, message.longitude]})
-        //this.setState({orientation: this.getOrientation(message.pose.pose.orientation).toFixed(0)})
+      console.log("pose_subscriber run")
+      //this.setState({x: message.latitude.toFixed(7)})
+      //this.setState({y: message.longitude.toFixed(7)})
+      //log.message({[message.latitude, message.longitude]})
+      this.setState({ huskypos: [message.latitude, message.longitude] })
+      //this.setState({orientation: this.getOrientation(message.pose.pose.orientation).toFixed(0)})
 
     })
   }
-/**
- * This is a lifecycle method in a React component that checks if the markerPath state has been updated
- * and logs a message if it has.
- */
+  /**
+   * This is a lifecycle method in a React component that checks if the markerPath state has been updated
+   * and logs a message if it has.
+   */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.huskypos !== this.state.huskypos) {
-      this.setState({huskyPath: [...this.state.huskyPath, this.state.huskypos]})
+      this.setState({ huskyPath: [...this.state.huskyPath, this.state.huskypos] })
       console.log("Husky path update")
     }
-    if (prevState.huskypos == null && this.state.huskypos != null) {
+    /*if (prevState.huskypos == null && this.state.huskypos != null) {
       this.map.flyTo(this.state.huskypos)
-    }
+    }*/
   }
   sendData = () => {
     console.log("Send Data Trykket")
@@ -104,8 +104,8 @@ class MapComp extends Component {
       const map = useMapEvents({
         click: (e) => {
           console.log("Map clicked pos: ", e.latlng)
-          this.setState({markerPos: e.latlng})
-          this.setState({markerPath: [...this.state.markerPath, e.latlng]})
+          this.setState({ markerPos: e.latlng })
+          this.setState({ markerPath: [...this.state.markerPath, e.latlng] })
         }
       })
     }
@@ -120,13 +120,13 @@ class MapComp extends Component {
 
     return (
       <MapContainer
-      center={[61.45874, 5.88743]}
-      zoom={18}
-      scrollWheelZoom={true}
-      maxZoom={25}
-      whenCreated={(map) => {
-        this.map = map;
-      }}
+        center={[61.45874, 5.88743]}
+        zoom={18}
+        scrollWheelZoom={true}
+        maxZoom={25}
+        whenCreated={(map) => {
+          this.map = map;
+        }}
       >
         <ClickMap />
         <TileLayer
@@ -134,7 +134,7 @@ class MapComp extends Component {
           maxZoom={25}
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
+        />
         {/* Robot Marker */}
         {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}>
           <Popup>
@@ -143,21 +143,21 @@ class MapComp extends Component {
         </Marker>}
         <LayersControl position="topright">
           <LayersControl.Overlay checked name="Marker from user">
-        {/* Marker from user */}
-        {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon}>
-          <Popup position={this.state.markerPos}>
-            <span onClick={RemovePath}>{RemovePath ? 'click' : 'Click to remove'}</span>
-          </Popup>
-          <Tooltip>Click on marker to remove path</Tooltip>
-          </Marker>}
+            {/* Marker from user */}
+            {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon} onClick={RemovePath}>{RemovePath ? 'cl' : 'clcl'}
+              <Popup position={this.state.markerPos}>
+              <span onClick={RemovePath}>{RemovePath ? 'click' : 'Click to remove'}</span>
+              </Popup>
+              <Tooltip>Click on marker to remove path</Tooltip>
+            </Marker>}
           </LayersControl.Overlay>
           <LayersControl.Overlay checked name="Path">
-          {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
+            {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
           </LayersControl.Overlay>
           <LayersControl.Overlay checked name="Husky Path">
-          {this.state.huskyPath.length > 2 && <Polyline positions={this.state.huskyPath} color="blue" />}
+            {this.state.huskyPath.length > 2 && <Polyline positions={this.state.huskyPath} color="blue" />}
           </LayersControl.Overlay>
-          </LayersControl>
+        </LayersControl>
       </MapContainer>
     );
   }
