@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, Tooltip, LayersControl } from "react-leaflet";
+import React, { Component, useContext } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, LayersControl, Polygon } from "react-leaflet";
 import { Icon } from "leaflet";
+import { RobotDataContext } from './RobotDataContext'
 
 class MapComp extends Component {
+  static contextType = RobotDataContext;
   state = {
     connected: false,
     ros: null,
     huskypos: null, //[61.45874, 5.88743]
-    markerPos: null,
-    markerPath: [],
     huskyPath: [],
   };
 
@@ -23,7 +23,7 @@ class MapComp extends Component {
     ros.on("close", () => {
       console.log("Connection is closed! MapComp");
       this.setState({ connected: false, ros: null });
-      // Retry every second
+      // Retry REACT_APP_REFRESH_TIMER in ms
       setTimeout(() => {
         try {
           ros.connect(
@@ -64,12 +64,7 @@ class MapComp extends Component {
     // Pose callback
     pose_subscriber.subscribe((message) => {
       console.log("pose_subscriber run")
-      //this.setState({x: message.latitude.toFixed(7)})
-      //this.setState({y: message.longitude.toFixed(7)})
-      //log.message({[message.latitude, message.longitude]})
       this.setState({ huskypos: [message.latitude, message.longitude] })
-      //this.setState({orientation: this.getOrientation(message.pose.pose.orientation).toFixed(0)})
-
     })
   }
   /**
@@ -85,10 +80,9 @@ class MapComp extends Component {
       this.map.flyTo(this.state.huskypos)
     }*/
   }
-  sendData = () => {
-    console.log("Send Data Trykket")
-  }
   render() {
+    const { markerPos, markerPath, setMarkerPos, setMarkerPath } = this.context;
+
     const roboticon = new Icon({
       iconUrl:
         "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // Can input path to file or url
@@ -103,20 +97,12 @@ class MapComp extends Component {
     const ClickMap = () => {
       const map = useMapEvents({
         click: (e) => {
-          console.log("Map clicked pos: ", e.latlng)
-          this.setState({ markerPos: e.latlng })
-          this.setState({ markerPath: [...this.state.markerPath, e.latlng] })
+          console.log("Map clicked pos: ", markerPath)
+          setMarkerPos(e.latlng)
+          setMarkerPath([...markerPath, e.latlng]);
         }
       })
     }
-
-    const RemovePath = () => {
-      this.setState({
-        markerPos: null,
-        markerPath: [],
-      })
-    }
-
 
     return (
       <MapContainer
@@ -142,17 +128,16 @@ class MapComp extends Component {
           </Popup>
         </Marker>}
         <LayersControl position="topright">
-          <LayersControl.Overlay checked name="Marker from user">
+          <LayersControl.Overlay checked name="Marker user">
             {/* Marker from user */}
-            {this.state.markerPos && <Marker position={this.state.markerPos} icon={inicon} onClick={RemovePath}>{RemovePath ? 'cl' : 'clcl'}
-              <Popup position={this.state.markerPos}>
-              <span onClick={RemovePath}>{RemovePath ? 'click' : 'Click to remove'}</span>
-              </Popup>
-              <Tooltip>Click on marker to remove path</Tooltip>
+            {markerPos && <Marker position={markerPos} icon={inicon} >
             </Marker>}
           </LayersControl.Overlay>
           <LayersControl.Overlay checked name="Path">
-            {this.state.markerPath.length > 1 && <Polyline positions={this.state.markerPath} color="red" />}
+            {markerPath.length > 1 && <Polyline positions={markerPath} color="red" />}
+          </LayersControl.Overlay>
+          <LayersControl.Overlay checked name="Path Polygon">
+            {markerPath.length > 1 && <Polygon positions={markerPath} color="red" />}
           </LayersControl.Overlay>
           <LayersControl.Overlay checked name="Husky Path">
             {this.state.huskyPath.length > 2 && <Polyline positions={this.state.huskyPath} color="blue" />}
