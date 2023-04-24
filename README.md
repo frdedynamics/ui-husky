@@ -1,5 +1,11 @@
 # UI-Husky
 
+### Moved data from MapComp component to RobotDataContext
+
+Added Polygon view
+
+![bilde](https://user-images.githubusercontent.com/83178024/233996527-934f7adb-a3ee-48c3-867f-bfdd0f9f6dbc.png)
+
 ### Show husky path
 
 ![bilde](https://user-images.githubusercontent.com/83178024/232010622-bdd4424e-47d2-4b81-83e9-0a5c17ba1399.png)
