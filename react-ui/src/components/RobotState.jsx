@@ -35,7 +35,7 @@ class RobotState extends Component {
             ""
           );
         } catch (error) {
-          console.log("connection problem Robotstate");
+          console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS+":"+process.env.REACT_APP_PORT_ROS);
         }
       }, Config.REFRESH)
     });
@@ -50,7 +50,7 @@ class RobotState extends Component {
         ""
       );
     } catch (error) {
-      console.log("connection problem Robotstate");
+      console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS+":"+process.env.REACT_APP_PORT_ROS);
     }
   }
 

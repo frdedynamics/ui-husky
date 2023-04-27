@@ -10,7 +10,7 @@ function ResetData() {
   };
 
   return (
-    <button onClick={handleReset}>Reset Marker Position</button>
+    <button onClick={handleReset}>Reset Data</button>
   );
 }
 
