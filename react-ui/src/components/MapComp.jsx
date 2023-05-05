@@ -27,11 +27,7 @@ class MapComp extends Component {
       setTimeout(() => {
         try {
           ros.connect(
-            "ws://" +
-            process.env.REACT_APP_IP_ROS +
-            ":" +
-            process.env.REACT_APP_PORT_ROS +
-            ""
+            "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
           );
         } catch (error) {
           console.log("connection problem MapComp");
@@ -42,11 +38,7 @@ class MapComp extends Component {
 
     try {
       ros.connect(
-        "ws://" +
-        process.env.REACT_APP_IP_ROS +
-        ":" +
-        process.env.REACT_APP_PORT_ROS +
-        ""
+        "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
       );
     } catch (error) {
       console.log("connection problem MapComp");
