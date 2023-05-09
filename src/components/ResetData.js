@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { RobotDataContext } from "./RobotDataContext";
 
 function ResetData() {
+  // Next line is used to disable the eslint warning about unused variables. Remove it when you start using these variables.
+  // eslint-disable-next-line
   const { markerPos, setMarkerPos, markerPath, setMarkerPath } = useContext(RobotDataContext);
 
   const handleReset = () => {

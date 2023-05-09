@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Joystick } from "react-joystick-component"
-import Config from '../scrips/config';
 
 class Teleoperation extends Component {
     state = { ros: null }
@@ -21,22 +20,21 @@ class Teleoperation extends Component {
             setTimeout(() => {
                 try {
                     ros.connect(
-                        "ws://" +
-                        Config.ROSBRIDE_SERVER_IP +
-                        ":" +
-                        Config.ROSBRIDE_SERVER_PORT +
-                        "");
-                } catch (error) {
-                    console.log("connection problem ");
-                }
-            }, Config.REFRESH)
+                      "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
+                    );
+                  } catch (error) {
+                    console.log("connection problem Teleoperation");
+                  }
+                }, Number(process.env.REACT_APP_REFRESH_TIMER));
         });
 
         try {
-            ros.connect("ws://" + Config.ROSBRIDE_SERVER_IP + ":" + Config.ROSBRIDE_SERVER_PORT + "");
-        } catch (error) {
-            console.log("connection problem ");
-        }
+            ros.connect(
+              "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
+            );
+          } catch (error) {
+            console.log("connection problem Teleoperation");
+          }
     }
 
     handleMove(event) {
@@ -44,8 +42,8 @@ class Teleoperation extends Component {
         // ROS publisher
         var cmd_vel = new window.ROSLIB.Topic({
             ros: this.state.ros,
-            name: Config.CMD_VEL_TOPIC,
-            messageType: Config.CMD_VEL_TOPIC_TYPE
+            name: process.env.REACT_APP_TELE_POSITION_TOPIC,
+            messageType: process.env.REACT_APP_TELE_POSITION_TYPE,
         })
         // Twist massage
         var twist = new window.ROSLIB.Message({
@@ -68,8 +66,8 @@ class Teleoperation extends Component {
         // ROS publisher
         var cmd_vel = new window.ROSLIB.Topic({
             ros: this.state.ros,
-            name: Config.CMD_VEL_TOPIC,
-            messageType: Config.CMD_VEL_TOPIC_TYPE
+            name: process.env.REACT_APP_TELE_POSITION_TOPIC,
+            messageType: process.env.REACT_APP_TELE_POSITION_TYPE,
         })
         // Twist massage
         var twist = new window.ROSLIB.Message({
@@ -92,7 +90,7 @@ class Teleoperation extends Component {
             <div>
                 <Joystick
                     size={100}
-                    sticky={true}
+                    sticky={false}
                     baseColor="#EEEEEE"
                     stickColor="#BBBBBB"
                     move={this.handleMove}

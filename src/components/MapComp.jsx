@@ -13,6 +13,7 @@ class MapComp extends Component {
     ros: null,
     huskypos: null, //[61.45874, 5.88743]
     huskyPath: [],
+    centerpos: [61.45874, 5.88743],
   };
 
   /* `componentDidMount()` is a lifecycle method in a React component that is called after the
@@ -59,13 +60,12 @@ class MapComp extends Component {
     // Pose subscriber
     var pose_subscriber = new window.ROSLIB.Topic({
       ros: this.state.ros,
-      name: "/emlid/fix",
-      messageType: "sensor_msgs/NavSatFix",
+      name: process.env.REACT_APP_GPS_POSITION_TOPIC,
+      messageType: process.env.REACT_APP_GPS_POSITION_TYPE,
     })
     // Pose callback
     pose_subscriber.subscribe((message) => {
-      console.log("pose_subscriber run")
-      this.setState({ huskypos: [message.latitude, message.longitude] })
+      this.setState({ huskypos: [message.latitude, message.longitude] })    
     })
   }
   /**
@@ -75,7 +75,6 @@ class MapComp extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.huskypos !== this.state.huskypos) {
       this.setState({ huskyPath: [...this.state.huskyPath, this.state.huskypos] })
-      console.log("Husky path update")
     }
     /*if (prevState.huskypos == null && this.state.huskypos != null) {
       this.map.flyTo(this.state.huskypos)
@@ -104,6 +103,8 @@ class MapComp extends Component {
  * The ClickMap function sets a marker position and path when the map is clicked.
  */
     const ClickMap = () => {
+      // Next line is used to disable the eslint warning about unused variable (map).
+      // eslint-disable-next-line
       const map = useMapEvents({
         click: (e) => {
           console.log("Map clicked pos: ", markerPath)
@@ -117,7 +118,7 @@ class MapComp extends Component {
     component. This JSX code is used by React to render the component on the webpage. */
     return (
       <MapContainer
-        center={[61.45874, 5.88743]}
+        center={this.state.huskypos || this.state.centerpos}
         zoom={18}
         scrollWheelZoom={true}
         maxZoom={25}

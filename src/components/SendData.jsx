@@ -83,12 +83,13 @@ class SendData extends Component {
     saveGpsService.callService(saveGpsRequest, (response)=> {
       console.log("In saveGpsService.callService")
       if(response.success) {
-        alert("Sendt data successfull")
+        alert("Data sent successfully")
       } else {
         alert("ROS service failed!")
       }
     }, (error) => {
       console.log('Error in saveGpsService.callService:', error);
+      alert("ROS service failed! " + error)
     });
     console.log('After calling saveGpsService.callService');
     console.log("End")

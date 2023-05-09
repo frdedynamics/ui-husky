@@ -6,11 +6,6 @@ export const RobotDataContextProvider = ({ children }) => {
     const [markerPos, setMarkerPos] = useState(null);
     const [markerPath, setMarkerPath] = useState([]);
 
-    const removePathPos = () => {
-        console.log("Remove user input")
-        setMarkerPos(null)
-        setMarkerPath([])
-    }
     const value = {
         markerPos,
         setMarkerPos,

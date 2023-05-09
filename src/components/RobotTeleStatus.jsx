@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { Row, Col, } from 'react-bootstrap'
-import Config from '../scrips/config';
+import { Row } from 'react-bootstrap'
 import * as Three from "three"
 
-class RobotState extends Component {
+class RobotTeleStatus extends Component {
     state = {
         ros: null,
         x: 0,
@@ -18,7 +17,7 @@ class RobotState extends Component {
         ros.on("connection", () => {
             console.log("Connection established!")
             this.setState({ connected: true, ros: ros })
-            this.getRobotState()
+            this.getRobotTeleStatus()
         });
 
         ros.on("close", () => {
@@ -28,26 +27,25 @@ class RobotState extends Component {
             setTimeout(() => {
                 try {
                     ros.connect(
-                        "ws://" +
-                        Config.ROSBRIDE_SERVER_IP +
-                        ":" +
-                        Config.ROSBRIDE_SERVER_PORT +
-                        "");
-                } catch (error) {
-                    console.log("connection problem Robotstate");
-                }
-            }, Config.REFRESH)
+                      "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
+                    );
+                  } catch (error) {
+                    console.log("connection problem Teleoperation");
+                  }
+                }, Number(process.env.REACT_APP_REFRESH_TIMER));
         });
-        this.getRobotState()
+        this.getRobotTeleStatus()
 
         try {
-            ros.connect("ws://" + Config.ROSBRIDE_SERVER_IP + ":" + Config.ROSBRIDE_SERVER_PORT + "");
-        } catch (error) {
-            console.log("connection problem ");
-        }
+            ros.connect(
+              "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + ""
+            );
+          } catch (error) {
+            console.log("connection problem Teleoperation");
+          }
     }
 
-    getRobotState() {
+    getRobotTeleStatus() {
         if (!this.state.ros) return;
         // Pose subscriber
         var pose_subscriber = new window.ROSLIB.Topic({
@@ -90,20 +88,16 @@ class RobotState extends Component {
         return (
             <div>
                 <Row>
-                    <Col>
                         <h4 className='mt-4'>Position</h4>
                         <p className='mt-0'>Lat: {this.state.x} </p>
                         <p className='mt-0'>Lon: {this.state.y}</p>
-                    </Col>
-                    <Col>
                         <h4 className='mt-4'>Velocities</h4>
                         <p className='mt-0'>Linear: {this.state.linear_v}</p>
                         <p className='mt-0'>Angular: {this.state.angular_v}</p>
-                    </Col>
                 </Row>
             </div>
         );
     }
 }
 
-export default RobotState;
+export default RobotTeleStatus;
