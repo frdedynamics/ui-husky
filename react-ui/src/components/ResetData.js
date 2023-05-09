@@ -10,7 +10,7 @@ function ResetData() {
   };
 
   return (
-    <button onClick={handleReset}>Reset Data</button>
+    <button onClick={handleReset} class="btn btn-lg btn-primary" type="button">Remove all markers</button>
   );
 }
 

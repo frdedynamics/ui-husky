@@ -48,6 +48,7 @@ class SendData extends Component {
     console.log("button clicked")
     if (!ros) {
       console.log("SendData - ROS not connected");
+      alert("ROBOT NOT CONNECTED\nPlease make sure the robot is powered on and connected to the network");
       return;
     }
     console.log("Ros not null")
@@ -93,7 +94,7 @@ class SendData extends Component {
     console.log("End")
   }
   render() {
-    return (<button onClick={this.sendGPSData}> Send Data </button>);
+    return (<button onClick={this.sendGPSData} class="btn btn-lg btn-primary" type="button"> Start Robot Mower </button>);
   }
 }
 

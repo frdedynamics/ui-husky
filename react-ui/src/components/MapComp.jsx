@@ -1,8 +1,11 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents, Polyline, LayersControl, Polygon } from "react-leaflet";
 import { Icon } from "leaflet";
 import { RobotDataContext } from './RobotDataContext'
 
+/* `class MapComp` is creating a new React component called `MapComp`. This component is responsible for rendering a map
+using the `react-leaflet` library and subscribing to ROS topics to get the position of a robot and
+update the map accordingly. It also allows the user to add markers and paths to the map. */
 class MapComp extends Component {
   static contextType = RobotDataContext;
   state = {
@@ -12,6 +15,10 @@ class MapComp extends Component {
     huskyPath: [],
   };
 
+  /* `componentDidMount()` is a lifecycle method in a React component that is called after the
+  component has been mounted (i.e., inserted into the DOM). In this code, it is used to establish a
+  connection to a ROS server and subscribe to a topic to get the position of a robot. It also sets
+  the `connected` and `ros` state variables accordingly. */
   componentDidMount() {
     const ros = new window.ROSLIB.Ros();
     ros.on("connection", () => {
@@ -44,6 +51,8 @@ class MapComp extends Component {
       console.log("connection problem MapComp");
     }
   }
+  /* `getRobotState()` is a function that subscribes to a ROS topic to get the position of a robot and
+  updates the `huskypos` state variable with the latitude and longitude of the robot's position. */
   getRobotState() {
     console.log("getRobotState run")
     if (!this.state.ros) return;
@@ -72,6 +81,11 @@ class MapComp extends Component {
       this.map.flyTo(this.state.huskypos)
     }*/
   }
+  /* `render()` is a method in a React component that returns the JSX (JavaScript XML) code that
+  defines the structure and content of the component. In this code, `render()` is returning a
+  `MapContainer` component from the `react-leaflet` library, which displays a map with various
+  layers and markers. It also subscribes to ROS topics to get the position of a robot and updates
+  the map accordingly. Additionally, it allows the user to add markers and paths to the map. */
   render() {
     const { markerPos, markerPath, setMarkerPos, setMarkerPath } = this.context;
 
@@ -86,6 +100,9 @@ class MapComp extends Component {
       iconSize: [30, 30],
     });
 
+/**
+ * The ClickMap function sets a marker position and path when the map is clicked.
+ */
     const ClickMap = () => {
       const map = useMapEvents({
         click: (e) => {
@@ -96,6 +113,8 @@ class MapComp extends Component {
       })
     }
 
+    /* `return` is returning the JSX code that defines the structure and content of the `MapComp`
+    component. This JSX code is used by React to render the component on the webpage. */
     return (
       <MapContainer
         center={[61.45874, 5.88743]}

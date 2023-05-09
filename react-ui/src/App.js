@@ -14,7 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<MapComp />} />
-          <Route path="/data" element={<DataPage />} />
+          <Route path="/remote-control" element={<DataPage />} />
         </Routes>
       </div>
     </RobotDataContextProvider>
