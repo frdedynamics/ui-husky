@@ -1,5 +1,14 @@
 # UI-Husky
 
+### Final revisjon
+
+Map and remote control implimanted in same app
+
+![bilde](https://github.com/Axo-xD/ui-husky/assets/83178024/848b56b1-3527-4cba-a01f-dd3340ecdfb8)
+
+![bilde](https://github.com/Axo-xD/ui-husky/assets/83178024/84e790ab-9e5f-4c9b-acf7-d0d1eb22f01a)
+
+
 ### Send Data button implimented
 
 ![image](https://user-images.githubusercontent.com/83178024/236484589-b77d995c-dd22-486a-a5e5-53ea0e385104.png)
