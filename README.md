@@ -18,7 +18,7 @@ Here are the essential prerequisites you need to install this software:
 
 You can download Node.js and npm directly from the [official Node.js website](https://nodejs.org).
 
-#### INstalling rosbridge_suite
+#### Installing rosbridge_suite
 
 Follow guide on [GitHub](https://github.com/RobotWebTools/rosbridge_suite)
 
