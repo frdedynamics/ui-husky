@@ -59,10 +59,17 @@ The application should now be running in your browser at `http://localhost:3000`
 
 For others on the same local network to connect to the server, they can use your IP address followed by the port number: `http://<Your-IP-Address>:3000`.
 
-## Important Files
+## Environment variable
 
-Here's a list of important files and their purposes:
+`.env`: This is where you store environment variables in the application. This file contains the IP address of the PC/Robot running the WebSocket. The default port of the websocket is `9090`. See the `.env`:
+ ```
+  REACT_APP_IP_ROS = 'IP of rosbride robot/PC'
 
-- `.env`: This is where you store environment variables in the application. This file contains the IP address of the PC/Robot running the WebSocket
+  REACT_APP_PORT_ROS = '9090'
+  REACT_APP_REFRESH_TIMER = 1000
+  REACT_APP_GPS_POSITION_TOPIC = '/emlid/fix'
+  REACT_APP_GPS_POSITION_TYPE = 'sensor_msgs/NavSatFix'
 
-
+  REACT_APP_TELE_POSITION_TOPIC = '/cmd_vel'
+  REACT_APP_TELE_POSITION_TYPE = 'geometry_msgs/Twist'
+  ```
