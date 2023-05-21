@@ -39,7 +39,17 @@ cd ui-husky
 ```bash
 npm install
 ```
-4. **Start a local server**
+
+4. **Start rosbridge_suite**
+
+Start `rosbridge_suite` on the robot or on a PC connected to the ROS instance. You can do this by opening a new terminal window and entering the following command:
+
+```bash
+roslaunch rosbridge_server rosbridge_websocket.launch
+```
+This will launch `rosbridge_suite` and allow the application to communicate with the ROS instance.
+
+5. **Start a local server**
 
 ```bash
 npm start
