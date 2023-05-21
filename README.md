@@ -12,10 +12,15 @@ Here are the essential prerequisites you need to install this software:
 
 - Node.js
 - npm
+- Robot or PC running `rosbridge_suite`
 
 #### Installing Node.js and npm
 
 You can download Node.js and npm directly from the [official Node.js website](https://nodejs.org).
+
+#### INstalling rosbridge_suite
+
+Follow guide on [GitHub](https://github.com/RobotWebTools/rosbridge_suite)
 
 ### Instalation
 
@@ -42,3 +47,11 @@ npm start
 The application should now be running in your browser at `http://localhost:3000`.
 
 For others on the same local network to connect to the server, they can use your IP address followed by the port number: `http://<Your-IP-Address>:3000`.
+
+## Important Files
+
+Here's a list of important files and their purposes:
+
+- `.env`: This is where you store environment variables that are intended to be used in the application. This file contains the IP address of the PC/Robot running the WebSocket
+
+
