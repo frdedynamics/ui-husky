@@ -15,7 +15,7 @@ function Header() {
     <Navbar bg="light" expand="lg">
       <Container>
         <ConnectionStatus />
-        <Navbar.Brand href="/">Robot Control</Navbar.Brand>
+        <Navbar.Brand href="/">Husky</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           {/* This is a conditional hides buttons when not in showing root('/'). 

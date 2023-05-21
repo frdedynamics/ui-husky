@@ -65,7 +65,7 @@ class MapComp extends Component {
     })
     // Pose callback
     pose_subscriber.subscribe((message) => {
-      this.setState({ huskypos: [message.latitude, message.longitude] })    
+      this.setState({ huskypos: [message.latitude, message.longitude] })
     })
   }
   /**
@@ -91,17 +91,17 @@ class MapComp extends Component {
     const roboticon = new Icon({
       iconUrl:
         "https://cdn-icons-png.flaticon.com/512/2776/2776000.png", // Can input path to file or url
-      iconSize: [38, 38],
+      iconSize: [24, 24],
     });
     const inicon = new Icon({
       iconUrl:
         "https://cdn-icons-png.flaticon.com/512/484/484167.png", // Can input path to file or url
-      iconSize: [30, 30],
+      iconSize: [12, 12],
     });
 
-/**
- * The ClickMap function sets a marker position and path when the map is clicked.
- */
+    /**
+     * The ClickMap function sets a marker position and path when the map is clicked.
+     */
     const ClickMap = () => {
       // Next line is used to disable the eslint warning about unused variable (map).
       // eslint-disable-next-line
@@ -119,7 +119,7 @@ class MapComp extends Component {
     return (
       <MapContainer
         center={this.state.huskypos || this.state.centerpos}
-        zoom={18}
+        zoom={19}
         scrollWheelZoom={true}
         maxZoom={25}
         whenCreated={(map) => {
@@ -128,13 +128,13 @@ class MapComp extends Component {
       >
         <ClickMap />
         <TileLayer
-          maxNativeZoom={19}
-          maxZoom={25}
+          maxNativeZoom={19} // Max zoom level for the map. Set to 19 for OpenStreetMap tiles since they don't have tiles for zoom levels higher than 19.
+          maxZoom={25} // Max zoom level for the map. Set to 25 to allow zooming in beyond the max zoom level of the tiles.
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* Robot Marker */}
-        {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}>
+        {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}> 
           <Popup>
             Husky <br /> Mobile robot
           </Popup>
@@ -145,9 +145,11 @@ class MapComp extends Component {
             {markerPos && <Marker position={markerPos} icon={inicon} >
             </Marker>}
           </LayersControl.Overlay>
+          {/* Path from user */}
           <LayersControl.Overlay checked name="Path">
             {markerPath.length > 1 && <Polyline positions={markerPath} color="red" />}
           </LayersControl.Overlay>
+          {/* Area from user - polygon */}
           <LayersControl.Overlay checked name="Path Polygon">
             {markerPath.length > 1 && <Polygon positions={markerPath} color="red" />}
           </LayersControl.Overlay>
