@@ -48,6 +48,7 @@ Start `rosbridge_suite` on the robot or on a PC connected to the ROS instance. Y
 roslaunch rosbridge_server rosbridge_websocket.launch
 ```
 This will launch `rosbridge_suite` and allow the application to communicate with the ROS instance.
+robot or PC's IP address to the `.env` file. Set the `REACT_APP_IP_ROS` varieble to the IP running of the PC/Robot running the `rosbridge_server` node.
 
 5. **Start a local server**
 
@@ -62,6 +63,6 @@ For others on the same local network to connect to the server, they can use your
 
 Here's a list of important files and their purposes:
 
-- `.env`: This is where you store environment variables that are intended to be used in the application. This file contains the IP address of the PC/Robot running the WebSocket
+- `.env`: This is where you store environment variables in the application. This file contains the IP address of the PC/Robot running the WebSocket
 
 
