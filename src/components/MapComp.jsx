@@ -134,7 +134,7 @@ class MapComp extends Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {/* Robot Marker */}
-        {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}> 
+        {this.state.huskypos != null && <Marker position={this.state.huskypos} icon={roboticon}>
           <Popup>
             Husky <br /> Mobile robot
           </Popup>

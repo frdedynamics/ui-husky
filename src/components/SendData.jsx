@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { RobotDataContext } from './RobotDataContext'
 
+/* `class SendData extends Component` is creating a new class component called `SendData` that extends
+the `Component` class from the React library. This allows the `SendData` component to have access to
+React's lifecycle methods and other features provided by the `Component` class. */
 class SendData extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +34,8 @@ class SendData extends Component {
       }, Number(process.env.REACT_APP_REFRESH_TIMER))
     });
 
-  ros.on('error', function(error) { console.log(error); });
-  ros.on('connection', function() { console.log('Connection made!'); });
+    ros.on('error', function (error) { console.log(error); });
+    ros.on('connection', function () { console.log('Connection made!'); });
 
 
     try {
@@ -42,6 +45,12 @@ class SendData extends Component {
     }
   }
 
+  /* `sendGPSData(event)` is a method that is called when the "Start Robot" button is clicked. It first
+  checks if the ROS connection is established and if there are any navigation points to send. If
+  both conditions are met, it creates a new ROS service object and a new ROS service request object.
+  It then loops through the navigation points and adds them to the service request object. Finally,
+  it calls the ROS service using the service request object and displays an alert message depending
+  on the success or failure of the service call. */
   sendGPSData(event) {
     const { markerPath } = this.context;
     const { ros } = this.state;
@@ -72,7 +81,7 @@ class SendData extends Component {
     });
 
 
-    for (let i=0; i < markerPath.length; i++) {
+    for (let i = 0; i < markerPath.length; i++) {
       const newGpsData = {
         latitude: markerPath[i].lat,
         longitude: markerPath[i].lng
@@ -80,9 +89,9 @@ class SendData extends Component {
       saveGpsRequest.gps_coordinates.push(newGpsData);
     }
     console.log('Before calling saveGpsService.callService');
-    saveGpsService.callService(saveGpsRequest, (response)=> {
+    saveGpsService.callService(saveGpsRequest, (response) => {
       console.log("In saveGpsService.callService")
-      if(response.success) {
+      if (response.success) {
         alert("Data sent successfully")
       } else {
         alert("ROS service failed!")

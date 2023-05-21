@@ -5,6 +5,9 @@ import RobotTeleStatus from './RobotTeleStatus';
 
 class RemoteControl extends Component {
   state = {}
+  /* `render() {` is a method in a React component that returns the JSX (JavaScript XML) code that
+  defines the structure and content of the component. It is responsible for rendering a 
+  RemoteControl component, which includes a RobotTeleStatus component and a Teleoperation component. */
   render() {
     return (
       <div>

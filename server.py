@@ -1,7 +1,7 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
-HOST = "158.37.189.36"
+HOST = "localhost"
 PORT = 8080
 
 print(f"Creating server for host = {HOST} and port = {PORT}")

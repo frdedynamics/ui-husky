@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { Joystick } from "react-joystick-component"
 
+/* `class Teleoperation extends Component` is creating a new React component called `Teleoperation`. 
+This component is used to handle teleoperation of a robot using a joystick. It connects to a ROS server 
+and publishes Twist messages to control the robot's movement. The `Joystick` component from the 
+`react-joystick-component` library is used to capture joystick movements and trigger the `handleMove` 
+and `handleStop` functions to publish Twist messages to the ROS server. */
 class Teleoperation extends Component {
   state = { ros: null }
 
@@ -37,6 +42,11 @@ class Teleoperation extends Component {
     }
   }
 
+  /* `handleMove(event)` is a function that is triggered when the joystick is moved. It creates a ROS
+  publisher and publishes a Twist message to control the robot's movement based on the joystick
+  movement. The `event` parameter contains information about the joystick movement, including the x
+  and y coordinates of the joystick's position. The function uses these coordinates to set the
+  linear and angular velocities of the Twist message, which is then published to the ROS server. */
   handleMove(event) {
     console.log("Move")
     // ROS publisher

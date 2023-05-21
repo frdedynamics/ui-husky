@@ -37,9 +37,9 @@ class RobotState extends Component {
             "ws://" +
             process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + "");
         } catch (error) {
-          console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS+":"+process.env.REACT_APP_PORT_ROS);
+          console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS);
         }
-      },  Number(process.env.REACT_APP_REFRESH_TIMER));
+      }, Number(process.env.REACT_APP_REFRESH_TIMER));
     });
     this.getRobotState()
 
@@ -47,7 +47,7 @@ class RobotState extends Component {
       ros.connect(
         "ws://" + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS + "");
     } catch (error) {
-      console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS+":"+process.env.REACT_APP_PORT_ROS);
+      console.log("connection problem Robotstate " + process.env.REACT_APP_IP_ROS + ":" + process.env.REACT_APP_PORT_ROS);
     }
   }
 
@@ -86,13 +86,13 @@ class RobotState extends Component {
       this.setState({ angular_v: message.twist.twist.angular.z.toFixed(3) })
     })
   }
-/**
- * This function takes a quaternion representing orientation and returns the z-axis rotation in
- * degrees.
- * @returns the z-axis rotation in degrees, calculated from a given ROS orientation quaternion.
- * 
- * This is not used in the current version of the project.
- */
+  /**
+   * This function takes a quaternion representing orientation and returns the z-axis rotation in
+   * degrees.
+   * @returns the z-axis rotation in degrees, calculated from a given ROS orientation quaternion.
+   * 
+   * This is not used in the current version of the project.
+   */
   getOrientation(ros_orientation) {
     var q = new Three.Quaternion(
       ros_orientation.x,
@@ -105,12 +105,12 @@ class RobotState extends Component {
     return (RPY["_z"] * (180 / Math.PI)) + 180 // Return z in deg
   }
 
-/**
- * This is a React component that renders two paragraphs displaying the latitude and longitude values
- * stored in the component's state.
- * @returns A React component that renders two columns with the latitude and longitude values stored in
- * the component's state.
- */
+  /**
+   * This is a React component that renders two paragraphs displaying the latitude and longitude values
+   * stored in the component's state.
+   * @returns A React component that renders two columns with the latitude and longitude values stored in
+   * the component's state.
+   */
   render() {
     return (
       <div>
