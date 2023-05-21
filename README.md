@@ -30,4 +30,15 @@ git clone https://github.com/Axo-xD/ui-husky.git
 cd ui-husky
 ```
 3. **Install NPM packages**
+
+```bash
+npm install
+```
 4. **Start a local server**
+
+```bash
+npm start
+```
+The application should now be running in your browser at `http://localhost:3000`.
+
+For others on the same local network to connect to the server, they can use your IP address followed by the port number: `http://<Your-IP-Address>:3000`.
