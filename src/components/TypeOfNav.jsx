@@ -1,4 +1,4 @@
-import React, {Component, setState} from "react";
+import React, {Component} from "react";
 //import { RobotDataContext } from './RobotDataContext'; 
 // eslint-disable-next-line
 import bootstrap from "bootstrap"; 
@@ -19,7 +19,7 @@ class TypeOfNav extends Component {
         console.log("hey 1")
     }
 
-    
+
     surfaceCoverage() {
         this.setState({toggleText: "Surface Coverage"})
         console.log("hey 2")
@@ -29,7 +29,7 @@ class TypeOfNav extends Component {
     render() {
         return (    
                 <div className="dropdown">
-                    <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button className="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {this.state.toggleText}
                     </button>
 

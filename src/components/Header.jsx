@@ -25,11 +25,11 @@ function Header() {
             <Nav className="ms-auto">
               <Nav.Link href="/" style={{color:`black`}}>Map</Nav.Link>
               <Nav.Link href="/remote-control">Remote Control</Nav.Link>
-              <div>
+              
                 <TypeOfNav />
                 <SendData />
                 <ResetData />
-              </div>
+              
             </Nav>
             :
             <Nav className="ms-auto">
