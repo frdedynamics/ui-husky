@@ -4,6 +4,7 @@ import ConnectionStatus from './ConnectionStatus';
 import RobotState from './RobotState'
 import SendData from './SendData';
 import ResetData from './ResetData';
+import TypeOfNav from './TypeOfNav';
 import { useLocation } from 'react-router-dom';
 
 /*
@@ -25,6 +26,7 @@ function Header() {
               <Nav.Link href="/" style={{color:`black`}}>Map</Nav.Link>
               <Nav.Link href="/remote-control">Remote Control</Nav.Link>
               <div>
+                <TypeOfNav />
                 <SendData />
                 <ResetData />
               </div>
