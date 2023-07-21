@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap'
 import ConnectionStatus from './ConnectionStatus';
 import RobotState from './RobotState'
 import SendData from './SendData';
+import StartRobot from './StartRobot';
 import ResetData from './ResetData';
 import TypeOfNav from './TypeOfNav';
 import { useLocation } from 'react-router-dom';
@@ -28,6 +29,7 @@ function Header() {
               
                 <TypeOfNav />
                 <SendData />
+                <StartRobot />
                 <ResetData />
               
             </Nav>
