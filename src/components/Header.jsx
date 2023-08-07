@@ -7,6 +7,7 @@ import StartRobot from './StartRobot';
 import ResetData from './ResetData';
 import TypeOfNav from './TypeOfNav';
 import { useLocation } from 'react-router-dom';
+import LoadPath from './LoadPath';
 
 /*
 Navigation bar that display connaction status and input menue
@@ -28,6 +29,7 @@ function Header() {
               <Nav.Link href="/remote-control">Remote Control</Nav.Link>
               <Nav.Link href="http://192.168.131.1:8080">File Browser</Nav.Link>
               
+                <LoadPath />
                 <TypeOfNav />
                 <SendData />
                 <StartRobot />
