@@ -26,6 +26,7 @@ function Header() {
             <Nav className="ms-auto">
               <Nav.Link href="/" style={{color:`black`}}>Map</Nav.Link>
               <Nav.Link href="/remote-control">Remote Control</Nav.Link>
+              <Nav.Link href="http://192.168.131.1:8080">File Browser</Nav.Link>
               
                 <TypeOfNav />
                 <SendData />
@@ -37,6 +38,7 @@ function Header() {
             <Nav className="ms-auto">
               <Nav.Link href="/">Map</Nav.Link>
               <Nav.Link href="/remote-control" style={{color:`black`}}>Remote Control</Nav.Link>
+              <Nav.Link href="http://192.168.131.1:8080">File Browser</Nav.Link>
             </Nav>
           }
           
