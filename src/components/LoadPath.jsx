@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import { RobotDataContext } from './RobotDataContext'; 
+import Leaflet from "leaflet";
 // eslint-disable-next-line
-import bootstrap from "bootstrap"; 
+//import bootstrap from "bootstrap"; 
+
 
 class LoadPath extends Component {
     constructor(props) {
@@ -9,29 +11,70 @@ class LoadPath extends Component {
         this.state = {
           toggleText: "Manage path"
         };
-        this.waypointNav = this.waypointNav.bind(this);
-        this.surfaceCoverage = this.surfaceCoverage.bind(this);
+        this.savePath = this.savePath.bind(this);
+        this.downloadPath = this.downloadPath.bind(this);
+        this.link = document.createElement("a"); 
+        this.handleChange = this.handleChange.bind(this);
+        this.uploadPath = this.uploadPath.bind(this);
     }
     static contextType = RobotDataContext;
+    
 
-    waypointNav() {
-        this.setState({toggleText: "Waypoint Navigation"})
-        console.log("Navigation Type: Waypoint Navigation")
-        // eslint-disable-next-line
-        var { navType, setNavType } = this.context;
-        setNavType(1); // waypoint nav
-        //console.log("Nav type:", navType) // delay since in this function, but I don't think it's a problem
+    savePath() {
+        var now = new Date().toISOString();
+        console.log("Path saved " + now);
+        this.setState({toggleText: "Path saved " + now});
+        var {markerPath} = this.context;
+        console.log(markerPath);
+        const fileData = JSON.stringify(markerPath);
+        const blob = new Blob([fileData], {type: "text/plain"});
+        const url = URL.createObjectURL(blob);
+        this.link.download = now +".json";
+        this.link.href = url;
     }
 
 
-    surfaceCoverage() {
-        this.setState({toggleText: "Surface Coverage"})
-        console.log("Navigation Type: Surface Coverage")
-        // eslint-disable-next-line
-        var { navType, setNavType } = this.context;
-        setNavType(2); // surface coverage 
-        //console.log("Nav type:", navType) // delay since in this function, but I don't think it's a problem
+    downloadPath() {
+        if (this.link !== null) {
+            this.link.click();
+            this.setState({toggleText: "Path downloaded"});
+        }
+        else {
+            this.setState({toggleText: "No path has been saved yet"});
+        }
     }
+
+    handleChange = e => {
+        var {files, setFiles} = this.context;
+        const fileReader = new FileReader();
+        fileReader.readAsText(e.target.files[0], "UTF-8");
+        fileReader.onload = e => {
+          setFiles(JSON.parse(e.target.result));
+        };
+        this.setState({toggleText: e.target.files[0].name});
+
+    }
+
+    uploadPath(){
+        var {setMarkerPos, markerPath, setMarkerPath, files, setFiles} = this.context;
+        if (files.lenght !== 0){
+            setMarkerPos(null);
+            setMarkerPath([]);
+            var coordinates = []
+            console.log(files.length)
+            for (var i=0; i < files.length; i++){
+                var obj = files[i]
+                const coord = new Leaflet.latLng(obj.lat, obj.lng)
+                coordinates = [...coordinates, coord]
+                console.log(coordinates)
+            }
+            setMarkerPath(coordinates);
+        }
+        else {
+            this.setState({toggleText: "No file selected"});
+        }
+        
+    };
 
 
     render() {
@@ -43,7 +86,9 @@ class LoadPath extends Component {
 
                     <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <button className="dropdown-item" onClick={this.savePath}> Save the current path </button>
-                        <button className="dropdown-item" onClick={this.surfaceCoverage}> Load "file name from list"  </button>
+                        <button className="dropdown-item" onClick={this.downloadPath}> Download the saved path</button>
+                        <input type="file" onChange={this.handleChange} />
+                        <button className="dropdown-item" onClick={this.uploadPath}> Upload the path from file</button>
                     </div>
                 </div>
                 )
