@@ -22,7 +22,7 @@ You can download Node.js and npm directly from the [official Node.js website](ht
 
 Follow guide on [GitHub](https://github.com/RobotWebTools/rosbridge_suite)
 
-### Instalation
+### Installation
 
 1. **Clone the repo**
 
@@ -73,3 +73,49 @@ For others on the same local network to connect to the server, they can use your
   REACT_APP_TELE_POSITION_TOPIC = '/cmd_vel'
   REACT_APP_TELE_POSITION_TYPE = 'geometry_msgs/Twist'
   ```
+
+## Running the UI as a server on the Husky platform 
+
+The idea with this section is to explain how I installed this husky_ui on the Husky using a docker image. The end result is the UI always running when the Husky is on and being available on the browser (if you are in the same network of course) at this IP address: **http://192.168.131.1:3000**
+
+Those are the steps I followed: 
+1. In the .env file I changed REACT_APP_IP_ROS to '192.168.131.1'
+2. Then I created a dockerfile with the needed procedure to make build this ui
+   ```
+   ccc
+   ``` 
+4. Then I made an image of this repo with the following commands
+   ```
+   ccc
+   ```
+5. Once the image is made, I have to "download" it
+   ```
+   ccc
+   ``` 
+6. I then copied this image onto the Husky and loaded the image 
+   ```
+   ccc
+   ```
+7. I then created a docker compose file as follows:
+   ```
+   ccc
+   ``` 
+8. And finally I ran the docker container
+   ```
+   ccc
+   ``` 
+
+
+## Roadmap
+- [x] Create new repo
+- [x] Add README to it
+- [x] Making a button for choosing the nav type: waypoint or surface coverage
+- [x] Making a button to save the points
+- [x] Making a button to start the robot
+- [x] Making some solution to manage waypoints: save them, upload them, etc
+- [ ] Fixing the initial center on the map problem: it is currently hard coded to hvl, should be the Husky's first gps coordinates
+- [x] Uploading the UI on the Husky as a server
+- [ ] Fixing the back-end -> communication with husky's navigation stack
+
+
+
