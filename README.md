@@ -82,28 +82,67 @@ Those are the steps I followed:
 1. In the .env file I changed REACT_APP_IP_ROS to '192.168.131.1'
 2. Then I created a dockerfile with the needed procedure to make build this ui
    ```
-   ccc
+   FROM node:18-alpine
+
+   RUN mkdir /app && chown node:node /app
+   WORKDIR /app
+   
+   USER node
+   COPY --chown=node:node package.json ./
+   
+   RUN npm install
+   
+   COPY --chown=node:node . .
+   
+   EXPOSE 3000
+   
+   CMD ["npm","start"]
+
    ``` 
 4. Then I made an image of this repo with the following commands
    ```
-   ccc
+   docker image build -t ui-husky:0.4 .
    ```
+   0.4 is the tag number, choose a different one each time you make an image.
 5. Once the image is made, I have to "download" it
    ```
-   ccc
+   docker save -o ui-husky-image.docker ui-husky
    ``` 
 6. I then copied this image onto the Husky and loaded the image 
    ```
-   ccc
+   docker load --input ui-husky-image.docker 
    ```
-7. I then created a docker compose file as follows:
+   You can then check that this worked with
    ```
-   ccc
-   ``` 
-8. And finally I ran the docker container
+   docker image ls
    ```
-   ccc
-   ``` 
+8. I then created a docker compose file as follows:
+   ```
+   ---
+   version: '3'
+   services:
+    ui_husky:
+      image: ui-husky:0.4
+      container_name: ui_husky
+      user: 1000:1000
+      ports:
+        - 3000:3000
+      restart: unless-stopped
+      security_opt:
+        - no-new-privileges:true
+   ```
+   With the right tag number of course!
+9. And finally I ran the docker container
+   ```
+   docker-compose up -d --force-recreate
+   ```
+   You can check the state of the image running with this:
+   ```
+   docker ps
+   ```
+   You should then see the ports, the start time and the health of the image running.
+   
+   And also just open a browser and check that you can see the webapp. 
 
 
 ## Roadmap
